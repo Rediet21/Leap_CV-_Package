@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='leap-cv',
-    version='0.1',
+    name='Leap-CV',
+    version='0.2',
     author="10 Academy",
     packages=find_packages(),
     description="Cv Generation Package",
