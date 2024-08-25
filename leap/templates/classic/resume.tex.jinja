@@ -1,0 +1,161 @@
+\documentclass[10pt, A4]{classic}
+
+\begin{document}
+
+%===== TITLE SECTION =====%
+\begin{center}
+    {\HUGE\textsc{\VAR{personal.name}}} \textcolor{sectcol}{\rule[-1mm]{1mm}{0.9cm}} \textsc{\VAR{personal.role}}\\[2pt]
+\end{center}
+
+%===== Information SECTION =====%
+\BLOCK{if personal.phone or personal.email or personal.github or personal.linkedin}
+\cvsection{Information}
+\BLOCK{if personal.phone}
+\metasection{\VAR{personal.phone}}
+\BLOCK{endif}
+
+\BLOCK{if personal.email}
+\metasection{\href {\VAR{personal.email}}{\VAR{personal.email}}}
+\BLOCK{endif}
+
+\BLOCK{if personal.github}
+\metasection{\href {\VAR{personal.github}}{\VAR{personal.github}}}
+\BLOCK{endif}
+
+\BLOCK{if personal.linkedin}
+\metasection{\href {\VAR{personal.linkedin}}{\VAR{personal.linkedin}}}
+\BLOCK{endif}
+\BLOCK{endif}
+
+\vspace{-2pt}
+\textcolor{softcol}{\hrule}
+\vspace{6pt}
+
+\normalsize
+
+%===== Professional Summary =====%
+\BLOCK{if personal.professional_summary}
+\cvsection{Professional Summary}
+\begin{highlights}
+\item {\VAR{personal.professional_summary}}
+\end{highlights}
+\BLOCK{endif}
+
+%===== EXPERIENCE SECTION =====%
+\BLOCK{if work_experience}
+\cvsection{Experience}
+\BLOCK{for exp in work_experience}
+\cvevent{\VAR{exp.from} - \VAR{exp.to}}{\VAR{exp.role}}{\VAR{exp.company}}
+\begin{highlights}
+\BLOCK{for point in exp.description}
+\item {\VAR{point}}
+\BLOCK{endfor}
+\end{highlights}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+%===== EDUCATION SECTION =====%
+\BLOCK{if education}
+\cvsection{Education}
+\BLOCK{for edu in education}
+\cvevent{\VAR{edu.from} - \VAR{edu.to}}{\VAR{edu.degree}}{\VAR{edu.university}}
+\BLOCK{if edu.coursework}
+\begin{highlights}
+    \item \textbf{Coursework:} \textit{\VAR{', '.join(edu.coursework)}}\\
+\end{highlights}
+\BLOCK{endif}
+\BLOCK{if edu.grade}
+\begin{highlights}
+    {} \hfill (GPA: \VAR{edu.grade}) 
+\end{highlights}
+\BLOCK{endif}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+%===== SKILLS SECTION =====%
+\BLOCK{if skill_section}
+\cvsection{Skills}
+\BLOCK{for skill in skill_section}
+\begin{highlights}
+    \item \textbf{\VAR{skill.name}} {\VAR{', '.join(skill.skills)}}
+\end{highlights}
+\vspace{0.2 cm}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+%===== PROJECTS SECTION =====%
+\BLOCK{if projects}
+\cvsection{Projects}
+\BLOCK{for pro in projects}
+\cvevent{\href {\VAR{pro.link}}{Project Link}}{\VAR{pro.name}}{\VAR{pro.type}}
+\begin{highlights}
+\BLOCK{for point in pro.description}
+    \item \VAR{point}
+\BLOCK{endfor}
+\end{highlights}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+%===== CERTIFICATES SECTION =====%
+\BLOCK{if certifications}
+\cvsection{Certificates}
+\BLOCK{for cert in certifications}
+\cvevent {\href {\VAR{cert.link}}{link}}{\VAR{cert.name}}{\VAR{cert.by}}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+%===== KEYWORDS SECTION =====%
+\BLOCK{if keywords}
+\cvsection{Keywords}
+\begin{highlights}
+\BLOCK{for key in keywords}
+\item \VAR{key}
+\BLOCK{endfor}
+\end{highlights}
+\BLOCK{endif}
+
+%======= AWARD SECTION =====%
+\BLOCK{if awards}
+\cvsection{Awards}
+\BLOCK{for item in awards}
+    \textbf{\VAR{item.name}}
+\BLOCK{ endfor }
+\BLOCK{ if item.date }
+    \textbf{\VAR{item.date}}
+\BLOCK{ endif }
+\BLOCK{ if item.awarder }
+    \textbf{\VAR{item.awarder}}
+\BLOCK{ endif }
+\BLOCK{ if item.summary }
+    {\VAR{item.summary}}
+\BLOCK{ endif }
+\end{onecolentry}
+\BLOCK{endif}
+
+
+
+%======= INTEREST SECTION =====%
+
+\BLOCK{if interests}
+\cvsection{Interest}
+\BLOCK{for item in interests}
+\begin{highlights}
+    \item {\VAR{', '.join(item.keyword)}}
+\end{highlights}
+\vspace{0.2 cm}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+% ==== LANGUAGE SECTION =====%
+
+\BLOCK{if languages}
+\cvsection{Languages}
+\BLOCK{for item in languages}
+\begin{highlights}
+    \item \textbf{\VAR{item.language}}: \VAR{item.fluency}
+\end{highlights}
+\vspace{0.2 cm}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+\end{document}

@@ -1,0 +1,236 @@
+%==== PACKAGES AND OTHER DOCUMENT CONFIGURATIONS  ====%
+\documentclass{modern} % Use the custom modern.cls style
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp} % For mobile phone and email symbols
+% \usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{xcolor}  % Required for defining custom colors
+\usepackage{hyperref}
+% Define your custom colors
+% \definecolor{myblue}{RGB}{173, 216, 246}
+% \definecolor{myblue}{RGB}{123, 176, 206}
+\definecolor{myblue}{RGB}{0, 164, 218}
+
+% Set hyperlink colors
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myblue,
+    citecolor=myblue,
+    urlcolor=myblue
+}
+
+\begin{document}
+%==== Headings ====%
+\begin{header}
+\fontsize{25pt}{25pt}\selectfont \VAR{personal.name} | \VAR{personal.role} % Your name
+
+\vspace{5pt}
+
+\normalsize
+\BLOCK{ if personal.phone }
+    {\faPhone} \href{tel:\VAR{personal.phone}}{\VAR{personal.phone.replace(' ','')}} 
+\BLOCK{ endif } \quad
+\kern 5.0pt%
+\BLOCK{ if personal.email }
+    {\faEnvelope} \href{mailto:\VAR{personal.email}}{\VAR{personal.email}}  
+\BLOCK{ endif } \quad
+\kern 5.0pt%
+\BLOCK{ if personal.github }
+    {\faGithub} \href{\VAR{personal.github}}{\VAR{personal.github}} 
+\BLOCK{ endif } \quad
+\kern 5.0pt%
+\BLOCK{ if personal.linkedin }
+    {\faLinkedin} \href{\VAR{personal.linkedin}}{\VAR{personal.linkedin}} 
+\BLOCK{ endif } \quad
+
+\vspace{5pt}
+\end{header}
+
+%===== Professional summary SECTION =====%
+\BLOCK{if personal.professional_summary}
+\section{Professional Summary}
+\begin{onecolentry}
+    {}{}{\VAR{personal.professional_summary}}
+\end{onecolentry}
+\BLOCK{endif}
+
+%===== WORK EXPERIENCE SECTION =====%
+\section{Work Experience}
+\BLOCK{ for exp in work_experience }
+    \begin{twocolentry}{
+        \BLOCK{ if exp.from }\VAR{exp.from} - \BLOCK{ endif } \VAR{exp.to}
+    }
+        \textbf{\VAR{exp.role}}, \VAR{exp.company}, \VAR{exp.location}
+    \end{twocolentry}
+
+    \vspace{0.10cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \BLOCK{ for point in exp.description }
+                \item \VAR{point} 
+            \BLOCK{ endfor }
+        \end{highlights}
+    \end{onecolentry}
+
+\BLOCK{ endfor } 
+
+%===== EDUCATION SECTION =====%
+\BLOCK{ if education}
+\section{Education}
+\BLOCK{ for school in education }
+    \begin{twocolentry}{
+        \hfill \VAR{school.from} - \VAR{school.to}
+    }
+        \textbf{\VAR{school.university}}
+        \BLOCK{ if school.degree } 
+            \VAR{school.degree} 
+        \BLOCK{ endif } 
+    \end{twocolentry}
+    \begin{onecolentry}
+        \begin{highlights}
+            \BLOCK{ if school.area }
+                \hfill (Department: \VAR{school.area})
+            \BLOCK{ endif }             
+            \BLOCK{ if school.grade }
+                \hfill (GPA: \VAR{school.grade})
+            \BLOCK{ endif } 
+            \BLOCK{ if school.coursework }
+                \textbf{Coursework:} \textit{\VAR{', '.join(school.coursework)}}
+            \BLOCK{ endif }
+        \end{highlights}
+    \end{onecolentry}
+\BLOCK{ endfor }
+\BLOCK{ endif }
+
+% ==== PROJECTS SECTION =====%
+\section{Projects}
+\BLOCK{ for project in projects }
+    \begin{onecolentry}
+        \textbf{\VAR{project.name}}
+        \BLOCK{ if project.link }
+            \href{\VAR{project.link}}{\VAR{project.name}}
+        \BLOCK{ endif }
+    \end{onecolentry}
+
+    \vspace{0.10cm}
+    \begin{onecolentry}
+        \begin{highlights}
+            \BLOCK{ for point in project.description }
+                \item \VAR{point}
+            \BLOCK{ endfor }
+        \end{highlights}
+    \end{onecolentry}
+\BLOCK{ endfor }
+
+% ==== SKILL SECTION =====%
+\section{Skills}
+\BLOCK{for skill in skill_section}
+\begin{onecolentry}
+    \textbf{\VAR{skill.name}: } {\VAR{', '.join(skill.skills)}}
+\end{onecolentry}
+\vspace{0.2 cm}
+\BLOCK{endfor}
+
+% ==== CERTIFICATE SECTION =====%
+
+\BLOCK{if certifications}
+\section{Certifications}
+\BLOCK{for cert in certifications}
+\begin{onecolentry}
+    \textbf{\VAR{cert.by}} - {\VAR{cert.date}}
+\end{onecolentry}
+\begin{onecolentry}
+\VAR{cert.name}
+\end{onecolentry}
+\begin{onecolentry}
+\BLOCK{ if cert.link }
+    {\href{\VAR{cert.link}}{\VAR{cert.link}}}
+\BLOCK{ endif }
+\end{onecolentry}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+% ==== ACHIEVMENTS SECTION =====%
+
+\BLOCK{if achievments}
+\section{Achievments}
+\BLOCK{for item in achievments}
+\begin{onecolentry}
+\BLOCK{ if item.name }
+    \textbf{\VAR{item.name}}
+\BLOCK{ endif }
+\BLOCK{ if item.date }
+    \textbf{\VAR{item.date}}
+\BLOCK{ endif }
+\BLOCK{ if item.awarder }
+    \textbf{\VAR{item.awarder}}
+\BLOCK{ endif }
+\BLOCK{ if item.summary }
+    {\VAR{item.summary}}
+\BLOCK{ endif }
+\end{onecolentry}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+% ==== AWARDS SECTION =====%
+
+\BLOCK{if awards}
+\section{Awards}
+\BLOCK{for item in awards}
+\begin{onecolentry}
+\BLOCK{ if item.name }
+    \textbf{\VAR{item.name}}
+\BLOCK{ endif }
+\BLOCK{ if item.date }
+    \textbf{\VAR{item.date}}
+\BLOCK{ endif }
+\BLOCK{ if item.awarder }
+    \textbf{\VAR{item.awarder}}
+\BLOCK{ endif }
+\BLOCK{ if item.summary }
+    {\VAR{item.summary}}
+\BLOCK{ endif }
+\end{onecolentry}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+% ==== Interest SECTION =====%
+
+\BLOCK{if interests}
+\section{Interests}
+\BLOCK{for item in interests}
+\begin{onecolentry}
+{\VAR{', '.join(item.keywords)}}
+\end{onecolentry}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+% ==== LANGUAGE SECTION =====%
+
+\BLOCK{if languages}
+\section{Languages}
+\BLOCK{for item in languages}
+\begin{onecolentry}
+\textbf{\VAR{item.language}}: \VAR{item.fluency}
+\end{onecolentry}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+% ==== Keywords SECTION =====%
+\BLOCK{if keywords}
+\section{KeyWords}
+\begin{onecolentry}
+\begin{highlightsforbulletentries}
+\BLOCK{for keyword in keywords}
+\item \VAR{keyword}
+\BLOCK{endfor}
+\end{highlightsforbulletentries}
+\end{onecolentry}
+\BLOCK{endif}
+
+
+\end{document}
+
+

@@ -1,0 +1,177 @@
+%!TeX program = xelatex
+\documentclass{minimal}
+\title{Resume}
+\author{John Doe}
+\date{June 2024}
+
+\begin{document}
+
+\begin{multicols}{2}
+    \headerSection{\badge{flashyGreen}{\Large {\textbf{\VAR{personal.role}}}}}
+    \columnbreak
+    \headerSection{\xhrulefill{black}{0.6em}}
+\end{multicols}
+
+\begin{multicols}{2}
+    \BLOCK{if personal}
+    \headerSection{\Huge \textbf{\VAR{personal.name.split(" ")[0] }} \newline {\VAR{personal.name.split(" ")[1] }}} 
+    \BLOCK{if personal.phone}
+    \cvParagraph{\href{\VAR{personal.phone}}{\VAR{personal.phone}} \newline \href{\VAR{personal.email}}{\VAR{personal.email}} \newline \href{\VAR{personal.github}}{\VAR{personal.github}}}
+    \BLOCK{endif}
+    \BLOCK{endif}
+
+    \columnbreak
+    \begin{spacing}{1.5}
+    Junior Data Engineer with a strong background in Software Engineering, including database design, object-oriented programming, algorithms, data structure and python. Skilled in data processing, integration, visualization and analysis. Proven experience in building data warehouses, efficient data pipelines and ELT process.
+    \end{spacing}
+\end{multicols}
+
+\vspace{1em}
+\setlength{\columnsep}{1cm}
+
+%===== EXPERIENCE SECTION =====%
+\BLOCK{if work_experience}
+\cvSection{Experience}
+\begin{adjustwidth}{2em}{0em}
+\BLOCK{for exp in work_experience}
+\positionAndCompanyLine{\VAR{exp.role}}{\VAR{exp.company}}{\VAR{exp.from} - \VAR{exp.to}}
+\begin{flushleft}{\badge{lavenderBlue}{Responsibilities}}\end{flushleft}
+\BLOCK{for point in exp.description}
+\begin{itemize}
+    \item \VAR{point}
+\end{itemize}
+\BLOCK{endfor}
+\vspace{0.5em}
+\BLOCK{endfor}
+\end{adjustwidth}
+\BLOCK{endif}
+
+%===== EDUCATION SECTION =====%
+\BLOCK{if education}
+\cvSection{Education}
+\begin{adjustwidth}{2em}{0em}
+\BLOCK{for edu in education}
+\positionAndCompanyLine{\VAR{edu.degree}}{\VAR{edu.university}}{\VAR{edu.from} - \VAR{edu.to}}
+\BLOCK{for point in edu.description}
+\begin{itemize}
+    \item \VAR{point}
+\end{itemize}
+\BLOCK{endfor}
+\BLOCK{endfor}
+\end{adjustwidth}
+\BLOCK{endif}
+
+\vspace{1em}
+
+%======= Project SECTION =====%
+
+\BLOCK{if projects}
+\cvSection{Projects}
+\begin{adjustwidth}{2em}{0em}
+\BLOCK{for pro in projects}
+\positionAndCompanyLine{\VAR{pro.name}}{\VAR{pro.type}}{
+\BLOCK{if pro.link}
+{\href{\VAR{pro.link}}{project link}}
+\BLOCK{endif}}
+\BLOCK{if pro.description}
+\begin{itemize}
+    \BLOCK{for point in pro.description}
+    \item \VAR{point}
+    \BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\BLOCK{endfor}
+\end{adjustwidth}
+\BLOCK{endif}
+\vspace{1em}
+
+
+%======= Skill SECTION =====%
+\BLOCK{if skill_section}
+\cvSection{Skills}
+\begin{adjustwidth}{2em}{0em}
+\BLOCK{for skill in skill_section}
+\positionAndCompanyLine{\VAR{skill.name}}{}{}
+\begin{itemize}
+    \item \VAR{', '.join(skill.skills)}
+\end{itemize}
+\BLOCK{endfor}
+\end{adjustwidth}
+\BLOCK{endif}
+\vspace{1em}
+
+%======= Certification SECTION =====%
+\BLOCK{if certifications}
+\cvSection{Certificates}
+\begin{adjustwidth}{2em}{0em}
+\BLOCK{for cert in certifications}
+\positionAndCompanyLine{\VAR{cert.name}}{\VAR{cert.by}}{}
+\begin{itemize}
+    \item \VAR{cert.link}
+\end{itemize}
+\BLOCK{endfor}
+\end{adjustwidth}
+\BLOCK{endif}
+\vspace{1em}
+
+%======= Achievment SECTION =====%
+\BLOCK{if achievements}
+\cvSection{Achievements}
+\BLOCK{for ach in achievements}
+\begin{itemize}
+    \item \VAR{ach}
+\end{itemize}
+\BLOCK{endfor}
+\BLOCK{endif}
+
+%======= AWARD SECTION =====%
+\BLOCK{if awards}
+\cvSection{Awards}
+\begin{adjustwidth}{2em}{0em}
+\BLOCK{for item in awards}
+\positionAndCompanyLine{\VAR{item.name}}{\VAR{item.awarder}}{\VAR{item.date}}
+\BLOCK{for point in item.summary}
+\begin{itemize}
+    \item \VAR{point}
+\end{itemize}
+\BLOCK{endfor}
+\vspace{0.5em}
+\BLOCK{endfor}
+\end{adjustwidth}
+\BLOCK{endif}
+
+%======= INTEREST SECTION =====%
+\BLOCK{if interest}
+    \cvSection{Interest}
+    \BLOCK{for item in interests}
+    \begin{itemize}
+        \item {\VAR{', '.join(item.keyword)}} 
+    \end{itemize}
+    \BLOCK{endfor}
+\BLOCK{endif}
+
+
+%======= ACHIEVMENTS & LANGUAGE SECTION =====%
+
+\begin{multicols}{2}
+    \BLOCK{if achievements}
+    \cvSection{Achievements}
+    \BLOCK{for ach in achievements}
+    \begin{itemize}
+        \item \VAR{ach}  
+    \end{itemize}
+    \BLOCK{endfor}
+    \BLOCK{endif}
+    \columnbreak
+    \BLOCK{if languages}
+    \cvSection{Languages}
+    \BLOCK{for item in Languages}
+    \begin{adjustwidth}{1em}{0em}
+    \item \textbf{\VAR{item.language}}: \VAR{item.fluency}
+    \end{adjustwidth}
+    \BLOCK{endfor}
+    \BLOCK{endif}
+    
+\end{multicols}
+
+\end{document}
