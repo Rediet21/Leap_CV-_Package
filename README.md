@@ -15,21 +15,27 @@ LaTeXGen is a Python package designed to automate the process of generating LaTe
 ## Installation
 
 ### Windows
-For Windows, LaTeXGen will download and install MiKTeX if it is not already installed on your system.
+For Windows, Leap_CV will download and start the installation MiKTeX if it is not already installed on your system.
+
+While the package installs Miktex compiler, you will be prompted to choose between installing it "For all users" or "For me only" . Please ensure that you select the "For all users" option to avoid any potential permission issues or access restrictions.
 
 # Installing the package using pip
 
-pip install Leap-CV==0.2
+pip install Leap-CV==0.4
 
 # Usage
-To generate a LaTeX document, use the latexgen command followed by the .tex file and the desired template name.
+To generate a CV , use the leap command followed by the json_resume.json file and the desired template name.
 
-leap <latex-file.tex> [design-name]
+cd folder_directory
+leap <json_resume.json> [design-name]
 
 # Example 
-latexgen my_resume.tex modern
+leap json_resume.json modern
+leap json_resume.json classic
+leap json_resume.json minimal
 
-## Use the .tex file you got from leap with corresponding design name (3 designs are provided choose the one that correspods with your .tex file)
-leap xxx.tex modern
-leap xxx.tex classic
-leap xxx.tex minimal
+## Use the .json file you got from leap with any design (moder, classic and minimal) that you want to generate with
+leap json_resume.json modern
+
+
+
