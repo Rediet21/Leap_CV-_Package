@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='Leap-CV',
-    version='0.3',
+    version='0.5',
     author="10 Academy",
     packages=find_packages(),
     description="Cv Generation Package",

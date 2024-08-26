@@ -9,9 +9,12 @@ import sys
 
 
 
-sys.path.append('C:/Users/HP/Desktop/Leap/for users/Leap_CV-_Package/leap')
+sys.path.append(os.path.dirname(__file__))
 from latex_ops import generate_tex_file
+#sys.path.append('C:/Users/HP/Desktop/Leap/for users/Leap_CV-_Package/leap')
 import json
+
+
 
 def download_file(url, filename):
     response = requests.get(url, stream=True)
@@ -185,7 +188,7 @@ def compile_latex(json_file, template_name):
     # Ensure you are in the correct directory
 
     # Define the path to the resume.tex file inside the template directorycd ..
-    
+
     resume_tex_path = design_dstn_dir / "resume.tex"
 
     # Change the current working directory to design_dstn_dir

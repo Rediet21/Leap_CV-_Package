@@ -17,7 +17,7 @@ LaTeXGen is a Python package designed to automate the process of generating LaTe
 ### Windows
 For Windows, Leap_CV will download and start the installation MiKTeX if it is not already installed on your system.
 
-While the package installs Miktex compiler, you will be prompted to choose between installing it "For all users" or "For me only" . Please ensure that you select the "For all users" option to avoid any potential permission issues or access restrictions.
+While the package installs Miktex compiler, you will be prompted to choose between installing it "For anyone who uses this computer" or "only For me only" . Please ensure that you select the "For anyone who uses this computer" option to avoid any potential permission issues or access restrictions.
 
 # Installing the package using pip
 
@@ -34,7 +34,7 @@ leap json_resume.json modern
 leap json_resume.json classic
 leap json_resume.json minimal
 
-## Use the .json file you got from leap with any design (moder, classic and minimal) that you want to generate with
+## Use the .json file you got from leap with any design (modern, classic and minimal) that you want to generate with
 leap json_resume.json modern
 
 
