@@ -1,11 +1,8 @@
 %!TeX program = xelatex
 \documentclass{minimal}
-\title{Resume}
-\author{John Doe}
-\date{June 2024}
+
 
 \begin{document}
-
 \begin{multicols}{2}
     \headerSection{\badge{flashyGreen}{\Large {\textbf{\VAR{personal.role}}}}}
     \columnbreak
@@ -71,7 +68,7 @@
 \BLOCK{for pro in projects}
 \positionAndCompanyLine{\VAR{pro.name}}{\VAR{pro.type}}{
 \BLOCK{if pro.link}
-{\href{\VAR{pro.link}}{project link}}
+{\href{\VAR{pro.link}}{Link}}
 \BLOCK{endif}}
 \BLOCK{if pro.description}
 \begin{itemize}
@@ -91,10 +88,7 @@
 \cvSection{Skills}
 \begin{adjustwidth}{2em}{0em}
 \BLOCK{for skill in skill_section}
-\positionAndCompanyLine{\VAR{skill.name}}{}{}
-\begin{itemize}
-    \item \VAR{', '.join(skill.skills)}
-\end{itemize}
+\positionAndCompanyLine{\VAR{skill.name}}{\VAR{', '.join(skill.skills)}}{}
 \BLOCK{endfor}
 \end{adjustwidth}
 \BLOCK{endif}
@@ -105,14 +99,15 @@
 \cvSection{Certificates}
 \begin{adjustwidth}{2em}{0em}
 \BLOCK{for cert in certifications}
-\positionAndCompanyLine{\VAR{cert.name}}{\VAR{cert.by}}{}
-\begin{itemize}
-    \item \VAR{cert.link}
-\end{itemize}
+\positionAndCompanyLine{\VAR{cert.name}}{\VAR{cert.by}}{
+\BLOCK{ if cert.link}
+    {\href{\VAR{cert.link}}{Link}}
+\BLOCK{endif}}
 \BLOCK{endfor}
 \end{adjustwidth}
 \BLOCK{endif}
 \vspace{1em}
+
 
 %======= Achievment SECTION =====%
 \BLOCK{if achievements}
@@ -165,7 +160,7 @@
     \columnbreak
     \BLOCK{if languages}
     \cvSection{Languages}
-    \BLOCK{for item in Languages}
+    \BLOCK{for item in languages}
     \begin{adjustwidth}{1em}{0em}
     \item \textbf{\VAR{item.language}}: \VAR{item.fluency}
     \end{adjustwidth}

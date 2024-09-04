@@ -80,27 +80,44 @@
 \BLOCK{ if education}
 \section{Education}
 \BLOCK{ for school in education }
+    
     \begin{twocolentry}{
-        \hfill \VAR{school.from} - \VAR{school.to}
+        \BLOCK{ if school.from_date }
+        \hfill \VAR{school.from_date} - \VAR{school.to_date}
+        \BLOCK{ endif }
     }
         \textbf{\VAR{school.university}}
         \BLOCK{ if school.degree } 
             \VAR{school.degree} 
         \BLOCK{ endif } 
+        
     \end{twocolentry}
-    \begin{onecolentry}
-        \begin{highlights}
-            \BLOCK{ if school.area }
+    
+    \BLOCK{ if school.area }
+        \begin{onecolentry}
+            \begin{highlights}
                 \hfill (Department: \VAR{school.area})
-            \BLOCK{ endif }             
-            \BLOCK{ if school.grade }
+            \end{highlights}
+        \end{onecolentry}
+    \BLOCK{ endif } 
+
+    \BLOCK{ if school.grade }
+        \begin{onecolentry}
+            \begin{highlights}
                 \hfill (GPA: \VAR{school.grade})
-            \BLOCK{ endif } 
-            \BLOCK{ if school.coursework }
+            \end{highlights}
+        \end{onecolentry}
+    \BLOCK{ endif } 
+
+    
+    \BLOCK{ if school.coursework }
+        \begin{onecolentry}
+            \begin{highlights}
                 \textbf{Coursework:} \textit{\VAR{', '.join(school.coursework)}}
-            \BLOCK{ endif }
-        \end{highlights}
-    \end{onecolentry}
+            \end{highlights}
+        \end{onecolentry}
+    \BLOCK{ endif }
+
 \BLOCK{ endfor }
 \BLOCK{ endif }
 
@@ -110,7 +127,9 @@
     \begin{onecolentry}
         \textbf{\VAR{project.name}}
         \BLOCK{ if project.link }
-            \href{\VAR{project.link}}{\VAR{project.name}}
+            {\href{\VAR{project.link}}{Link}}
+
+            
         \BLOCK{ endif }
     \end{onecolentry}
 
@@ -134,23 +153,17 @@
 \BLOCK{endfor}
 
 % ==== CERTIFICATE SECTION =====%
-
 \BLOCK{if certifications}
 \section{Certifications}
 \BLOCK{for cert in certifications}
-\begin{onecolentry}
-    \textbf{\VAR{cert.by}} - {\VAR{cert.date}}
-\end{onecolentry}
-\begin{onecolentry}
-\VAR{cert.name}
-\end{onecolentry}
-\begin{onecolentry}
-\BLOCK{ if cert.link }
-    {\href{\VAR{cert.link}}{\VAR{cert.link}}}
-\BLOCK{ endif }
-\end{onecolentry}
+\begin{twocolentry}{
+    {\href{\VAR{cert.link}}{Link}}
+}
+    \textbf{\VAR{cert.name}}, \VAR{cert.by}, {}
+\end{twocolentry}
 \BLOCK{endfor}
 \BLOCK{endif}
+
 
 % ==== ACHIEVMENTS SECTION =====%
 

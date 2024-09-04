@@ -12,6 +12,12 @@
 \usepackage[none]{hyphenat}
 \usepackage{changepage}
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,      % Ensure links are colored
+    linkcolor=blue,       % Internal links (e.g., Table of Contents)
+    urlcolor=blue,        % URLs (like your project and certificate links)
+    citecolor=blue        % Citations
+}
 \usepackage{xcolor}
 \newcommand{\xhrulefill}[2]{\leavevmode\leaders\hrule height #2 \hfill\kern0pt\relax}
 \usepackage{iftex}
@@ -27,11 +33,6 @@
 % new command for external links:
 %\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
 
-\hypersetup{
-    unicode=true,
-    colorlinks=true,
-    urlcolor=black,
-}
 
 \setmainfont{Raleway}[
     Path= ./fonts/,
@@ -68,8 +69,8 @@
 \def\nameskip{\bigskip} % The space after your name at the top
 \def\sectionskip{\medskip} % The space after the heading section
 
-% Example of custom command definitions in resume.cls
-\ProvidesClass{resume}
+
+
 
 % Load necessary packages
 \RequirePackage{multicol}
