@@ -21,7 +21,7 @@ While the package installs Miktex compiler, you will be prompted to choose betwe
 
 # Installing the package using pip
 
-pip install Leap-CV==0.4
+pip install Leap-CV
 
 # Usage
 To generate a CV , use the leap command followed by the json_resume.json file and the desired template name.
