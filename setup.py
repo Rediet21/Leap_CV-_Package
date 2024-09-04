@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='Leap-CV',
-    version='0.5',
+    version='1.2',
     author="10 Academy",
     packages=find_packages(),
     description="Cv Generation Package",
@@ -13,6 +13,7 @@ setup(
     long_description_content_type="text/markdown",  # Type of the long description
     install_requires=[
         'requests',
+        'jinja2'
     ],
     entry_points={
         'console_scripts': [

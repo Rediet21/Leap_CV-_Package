@@ -2,3 +2,4 @@ mpm --install=raleway
 mpm --install=moresize
 mpm --install=fancyhdr
 mpm --install=multirow
+jinja 2

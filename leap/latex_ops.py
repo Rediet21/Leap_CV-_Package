@@ -23,6 +23,8 @@ def escape_for_latex(data):
         return "".join([latex_special_chars.get(c, c) for c in data])
     return data
 
+
+
 def use_template(jinja_env, json_resume):
     try:
         resume_template = jinja_env.get_template("resume.tex.jinja")

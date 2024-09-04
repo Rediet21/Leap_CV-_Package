@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 from shutil import copytree
 import sys
+import platform
 
 
 
@@ -84,40 +85,98 @@ def wait_for_miktex_installation(installer_filename, timeout=300):
     print("Timeout waiting for MiKTeX installation.")
     return False
 
-def compile_latex(json_file, template_name):
-    installer_filename = "basic-miktex-24.1-x64.exe"
-    miktex_url = "https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x64/basic-miktex-24.1-x64.exe"
-    
-    if not check_file_exists(installer_filename):
-        if not check_miktex_installed():
-            print("MiKTeX installer not found. Downloading...")
-            download_file(miktex_url, installer_filename)
-    else:
-        print("MiKTeX installer already downloaded.")
 
-    # Step 2: Install MiKTeX if not already installed
-    if not check_miktex_installed():
-        print("MiKTeX not found. Installing...")
-        install_process = subprocess.Popen(installer_filename, shell=True)
-        print("Installation started. Waiting for it to complete...")
-        if wait_for_miktex_installation(installer_filename):
-            print("MiKTeX installation completed.")
+def install_linux_dependencies():
+    try:
+        # Update the package list
+        # Run all the commands in one go using shell=True
+        subprocess.check_call(
+            "sudo apt-get install -y \
+            texlive-latex-base \
+            texlive-fonts-recommended \
+            texlive-latex-extra \
+            texlive-fonts-extra\
+            texlive-xetex \
+            && sudo apt-get clean",
+            shell=True
+        )
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "jinja2"])
+        print("All packages installed successfully.")
+
+        # Clean up the package list
+        
+
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred while installing dependencies: {e}")
+        raise
+
+def is_texlive_installed():
+    try:
+        # Run `tex --version` to check if TeX Live is installed
+        result = subprocess.run(["tex", "--version"], capture_output=True, text=True)
+        # Check if the command executed successfully
+        if result.returncode == 0:
+            print("TeX Live is already installed.")
+            return True
+    except FileNotFoundError:
+        # `tex` command not found, TeX Live is not installed
+        print("TeX Live is not installed.")
+    return False
+
+def install_jinja2():
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "jinja2"])
+        print("Jinja2 installed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred while installing Jinja2: {e}")
+        raise
+
+
+def compile_latex(json_file, template_name):
+    
+    install_jinja2()
+    current_os = platform.system()
+    if current_os == "Linux":
+        if not is_texlive_installed():
+            install_linux_dependencies()
         else:
-            print("MiKTeX installation failed or timed out.")
-            sys.exit(1)
-    else:
-        print("MiKTeX already installed.")
-    
-    # Step 3: Set PATH for Environment Variable
-    set_path()
-    
-    # Wait a bit to ensure the environment variable is updated
-    time.sleep(5)
-    
-    # Step 4: Automate Package Management
-    run_command('initexmf --mkmaps')
-    run_command('initexmf --update-fndb')
-    install_latex_packages()
+            print("Skipping Texlive installation")
+    else: 
+
+        installer_filename = "basic-miktex-24.1-x64.exe"
+        miktex_url = "https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x64/basic-miktex-24.1-x64.exe"
+        
+        if not check_file_exists(installer_filename):
+            if not check_miktex_installed():
+                print("MiKTeX installer not found. Downloading...")
+                download_file(miktex_url, installer_filename)
+        else:
+            print("MiKTeX installer already downloaded.")
+
+        # Step 2: Install MiKTeX if not already installed
+        if not check_miktex_installed():
+            print("MiKTeX not found. Installing...")
+            install_process = subprocess.Popen(installer_filename, shell=True)
+            print("Installation started. Waiting for it to complete...")
+            if wait_for_miktex_installation(installer_filename):
+                print("MiKTeX installation completed.")
+            else:
+                print("MiKTeX installation failed or timed out.")
+                sys.exit(1)
+        else:
+            print("MiKTeX already installed.")
+        
+        # Step 3: Set PATH for Environment Variable
+        set_path()
+        
+        # Wait a bit to ensure the environment variable is updated
+        time.sleep(5)
+        
+        # Step 4: Automate Package Management
+        run_command('initexmf --mkmaps')
+        run_command('initexmf --update-fndb')
+        run_command('pip install jinja2')
+        install_latex_packages()
 
 
     #finding path of the json
@@ -164,31 +223,6 @@ def compile_latex(json_file, template_name):
         print(f"Fonts directory already exists at {fonts_dest_dir}")
 
 
-
-  
-    # latex_path = template_dir / f"{template_name}."
-    # template_path = template_dir / f"{template_name}.cls"
-
-    
-    
-    # Check if the specified template exists
-    # if not template_path.is_file():
-    #     print(f"Template '{template_name}' not found.")
-    #     sys.exit(1)
-    
-    # Copy the template to the current directory
-    #temp_copy_path = Path(latex_file).parent / f"{template_name}.cls"
-    
-
-
-
-    # Decide which LaTeX compiler to use based on the template name
-    
-
-    # Ensure you are in the correct directory
-
-    # Define the path to the resume.tex file inside the template directorycd ..
-
     resume_tex_path = design_dstn_dir / "resume.tex"
 
     # Change the current working directory to design_dstn_dir
@@ -203,10 +237,13 @@ def compile_latex(json_file, template_name):
     # Run the appropriate LaTeX compiler
     run_command(latex_command)
 
+    
+
 
 
 
 def main():
+    
     if len(sys.argv) < 2 or len(sys.argv) > 3:
         print("Usage: latexgen <latex-file> [template-name]")
         sys.exit(1)
