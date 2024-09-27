@@ -1,0 +1,9 @@
+/build
+/dist
+/.git
+/.env
+/texfiles
+/Leap_API
+
+
+

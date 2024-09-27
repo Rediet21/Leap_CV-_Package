@@ -8,6 +8,8 @@
 % \usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
 \usepackage{xcolor}  % Required for defining custom colors
 \usepackage{hyperref}
+
+
 % Define your custom colors
 % \definecolor{myblue}{RGB}{173, 216, 246}
 % \definecolor{myblue}{RGB}{123, 176, 206}
@@ -42,8 +44,11 @@
 \BLOCK{ endif } \quad
 \kern 5.0pt%
 \BLOCK{ if personal.linkedin }
-    {\faLinkedin} \href{\VAR{personal.linkedin}}{\VAR{personal.linkedin}} 
-\BLOCK{ endif } \quad
+    {\faLinkedin}
+    \href{\VAR{personal.linkedin}}{\VAR{personal.linkedin}}
+\BLOCK{ endif }
+
+ \quad
 
 \vspace{5pt}
 \end{header}

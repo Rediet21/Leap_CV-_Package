@@ -17,7 +17,7 @@ def escape_for_latex(data):
         latex_special_chars = {
             "&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#", "_": r"\_",
             "{": r"\{", "}": r"\}", "~": r"\textasciitilde{}", "^": r"\^{}",
-            "\\": r"\textbackslash{}", "\n": "\\newline%\n", "-": r"{-}",
+            "\\": r"\textbackslash{}", "\n": "\\newline%\n", 
             "\xA0": "~", "[": r"{[}", "]": r"{]}"
         }
         return "".join([latex_special_chars.get(c, c) for c in data])

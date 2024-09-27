@@ -1,0 +1,93 @@
+\documentclass{fourth} % Use the custom modern.cls style
+
+\begin{document}
+\vspace{0.2cm}
+
+%==== Headings ====%
+
+{\fontsize{25pt}{25pt}\selectfont \textbf{\VAR{personal.name}}} \\
+{\fontsize{25pt}{25pt}\selectfont \textbf {\color{darkblue}\VAR{personal.role}}} \\
+\BLOCK{ if personal.phone }
+    {\faPhone} {tel:\VAR{personal.phone}} \hfill
+\BLOCK{ endif }
+\BLOCK{ if personal.email }
+    {\faEnvelope} \href{mailto:\VAR{personal.email}}{\VAR{personal.email}} 
+\BLOCK{ endif }
+\BLOCK{ if personal.github }
+    {\faGithub} \href{\VAR{personal.github}}{\VAR{personal.github}} \\
+\BLOCK{ endif }
+\BLOCK{ if personal.linkedin }
+    {\faLinkedin} \href{\VAR{personal.linkedin}}{\VAR{personal.linkedin}} \\
+\BLOCK{ endif }
+
+\begin{multicols}{2}
+%==== Left column starts ====%
+
+\BLOCK{if personal.professional_summary}
+    \section*{Summary}
+    {\VAR{personal.professional_summary}}
+\BLOCK{endif}
+
+\BLOCK{if work_experience}
+    \section*{Experience}
+    \BLOCK{ for exp in work_experience }
+        {\fontsize{15pt}{15pt}\textbf{\color{darkblue}\VAR{exp.role}}} \hfill {\VAR{exp.from} - \VAR{exp.to} \\
+        \VAR{exp.location}} \\
+        {\fontsize{15pt}{10pt}\textbf{\VAR{exp.company}}} \\
+        \BLOCK{ for point in exp.description }
+            \begin{compactitem}
+                \item \VAR{point}
+            \end{compactitem}
+        \BLOCK{ endfor }
+    \BLOCK{endfor}
+\BLOCK{endif}
+
+\BLOCK{if projects}
+    \section*{Projects}
+    \BLOCK{ for project in projects }
+        \textbf{\VAR{project.name}} \\
+        \href{\VAR{project.link}}{Link} \\
+        \BLOCK{ for point in project.description }
+            \begin{compactitem}
+                \item \VAR{point}
+            \end{compactitem}
+        \BLOCK{ endfor }
+    \BLOCK{ endfor }
+\BLOCK{ endif }
+
+%==== Right column starts ====%
+
+
+\BLOCK{if skill_section}
+    \section*{Skills}
+    \BLOCK{for skill in skill_section}
+        \textbf{\VAR{skill.name}: } {\VAR{', '.join(skill.skills)}} \\
+    \BLOCK{ endfor }
+\BLOCK{ endif }
+
+%===== Education Section =====%
+
+\BLOCK{if education}
+    \section*{Education}
+    \BLOCK{for edu in education}
+        {\fontsize{10pt}{15pt}\textbf{\color{darkblue}\VAR{edu.degree}}} \\
+        {\fontsize{10pt}{15pt}\textbf{\VAR{edu.university}}}, \VAR{edu.from_date} - \VAR{edu.to_date} \\
+        \BLOCK{ if edu.coursework}
+            \begin{itemize}[leftmargin=0.2in]
+                \item {\VAR{edu.coursework}}
+            \end{itemize}
+        \BLOCK{endif}
+    \BLOCK{ endfor }
+\BLOCK{ endif }
+
+%===== Certificates Section =====%
+
+\BLOCK{if certifications}
+    \section*{Certificates}
+    \BLOCK{ for cert in certifications }
+        \textbf{\VAR{cert.name}} \hfill \VAR{cert.by} \href{\VAR{cert.link}}{Link} \\
+    \BLOCK{ endfor }
+\BLOCK{ endif }
+
+\end{multicols}
+\end{document}

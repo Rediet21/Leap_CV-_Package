@@ -36,6 +36,18 @@
 \usepackage{ifthen} % for conditional statements
 \usepackage{needspace} % for avoiding page brake right after the section title
 \usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+\newcommand{\myhref}[1]{%
+  \begingroup
+  \def\hyphen{-}%
+  \edef\tmp{\expandafter\replace\expandafter{\hyphen}{#1}}
+  \endgroup
+  \href{\tmp}{\color{blue}{#1}}%
+}
+\newcommand{\replace}[2]{%
+  \ifx#1#2\expandafter\@firstofone\else\expandafter\@gobble\fi
+  {#2}%
+  \expandafter\replace\expandafter{#1}%
+}
 
 % Ensure that generate pdf is machine readable/ATS parsable:
 \ifPDFTeX
